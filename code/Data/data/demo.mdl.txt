@@ -1,0 +1,21 @@
+% Model in short notation; default parameters vector, can be omitted
+% these two fields must be separated with the sign ';'.
+
+expl_(sqrt_(ln_(frac2_(x1,x2)))); []
+ln_(frac2_(x1,x2)); []
+frac2_(x1,x2); []
+sqrt_(ln_(frac2_(x1,x2))); []
+
+% sqrt_(frac2_(ln_(x1),sqrt_(x2))); []
+% sqrt_(sqrt_(frac2_(x1,x2))); []
+% sqrt_(frac2_(plus2_(sqrt_(x1),times2_(x2,sqrt_(x2))),sqrt_(x2))); []
+% sqrt_(frac2_(sqrt_(x1),times2_(sqrt_(x2),expl_(x2)))); []
+% sqrt_(plus2_(sqrt_(x1),sqrt_(frac2_(x1,x2)))); []
+
+% frac2_(ln_(frac2_(ln_(ln_(x1)),sqrt_(plus2_(ln_(x1),x1)))),x2); [] 
+% frac2_(ln_(frac2_(ln_(ln_(x1)),sqrt_(plus2_(x1,ln_(sqrt_(x1)))))),x2); [] 
+% frac2_(ln_(ln_(frac2_(ln_(ln_(x1)),sqrt_(plus2_(x1,ln_(x1)))))),sqrt_(x2)); [] 
+% frac2_(ln_(frac2_(ln_(ln_(x1)),sqrt_(plus2_(x1,ln_(ln_(sqrt_(x1))))))),x2); [] 
+% frac2_(ln_(frac2_(ln_(ln_(x1)),plus2_(sqrt_(x1),sqrt_(x2)))),x2); []
+% frac2_(ln_(frac2_(ln_(ln_(x1)),sqrt_(x1))),sqrt_(x2)); [] 
+% ln_(frac2_(ln_(frac2_(ln_(ln_(x1)),sqrt_(plus2_(ln_(x1),x1)))),x2)); [] 

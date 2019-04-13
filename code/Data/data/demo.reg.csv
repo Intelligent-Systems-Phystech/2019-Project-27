@@ -1,0 +1,28 @@
+function,filename or handle,#outputs,#arguments,#parameters,params domain,default param values,args domain,args commute,codomain,latex
+plus2_,plus2_,1,2,0,[],[],"[-Inf, Inf; -Inf, Inf]","[1, 1]","[-Inf, Inf]",x1+x2
+minus2_,minus2_,1,2,0,[],[],"[-Inf, Inf; -Inf, Inf]","[1, 1]","[-Inf, Inf]",x1-(x2)
+times2_,times2_,1,2,0,[],[],"[-Inf, Inf; -Inf, Inf]","[1, 1]","[-Inf, Inf]",(x1)*(x2)
+parabola_,parabola_,1,1,3,"[-Inf, Inf; -Inf, Inf; -Inf, Inf]","[0, 1, 0]","[-Inf, Inf]",[1],"[-Inf, Inf]",w*(x)^2+w*(x)+w
+linear_,linear_,1,1,2,"[-Inf, Inf]","[0, 1]","[-Inf, Inf]",[1],"[-Inf, Inf]",w*(x)+w
+plus_,plus_,1,1,1,"[-Inf, Inf]",[0],"[-Inf, Inf]",[1],"[-Inf, Inf]",w+x
+sin_,sin_,1,1,0,[],[],"[-Inf, Inf]",[1],"[-1, 1]",sin(x)
+normal_,normal_,1,1,3,"[-Inf, Inf; -Inf, Inf; -Inf, Inf]","[1, 0, 1]","[-Inf, Inf]",[1],"[-Inf, Inf]",w*exp(((x-w)^2)*w)
+mult_,mult_,1,1,1,"[-Inf, Inf]",[1],"[-Inf, Inf]",[1],"[-Inf, Inf]",w*(x)
+frac2_,frac2_,1,2,0,[],[],"[-Inf, Inf; -Inf, Inf]","[1, 1]","[-Inf, Inf]",frac{x1}{x2}
+logsig_,logsig_,1,1,0,[],[],"[-Inf, Inf]",[1],"[-Inf, Inf]",frac{1}{1+exp(-x)}
+logsiga_,logsiga_,1,1,2,"[-Inf, Inf; -Inf, Inf]","[0, 1]","[-Inf, Inf]",[1],"[-Inf, Inf]",frac{1}{1+exp(-w*x+w)}
+inv_,inv_,1,1,0,[],[],"[-Inf, Inf]",[1],"[-Inf, Inf]",frac{1}{x}
+hyperbola_,hyperbola_,1,1,1,"[-Inf, Inf]",[1],"[-Inf, Inf]",[1],"[-Inf, Inf]",frac{w}{x}
+sina_,sina_,1,1,2,"[-Inf, Inf; -Inf, Inf]","[0, 1]","[-Inf, Inf]",[1],"[-Inf, Inf]",sin(w*x+w)
+sqrt_,sqrt_,1,1,0,[],[],"[-Inf, Inf]",[1],"[-Inf, Inf]",sqrt(x)
+sqrta_,sqrta_,1,1,2,"[-Inf, Inf; -Inf, Inf]","[0, 1]","[-Inf, Inf]",[1],"[-Inf, Inf]",sqrt(w*x+w)
+expl_,expl_,1,1,1,"[-Inf, Inf]",[-1],"[-Inf, 0]",[1],"[-Inf, Inf]",exp(w*x)
+arctanl_,arctanl_,1,1,1,"[-Inf, Inf]",[1],"[-Inf, Inf]",[1],"[-Inf, Inf]",atan(w*x)
+tansig_,tansig_,1,1,0,[],[],"[-Inf, Inf]",[1],"[-Inf, Inf]",tansig(x)
+omexpl_,omexpl_,1,1,1,"[-Inf, Inf]",[1],"[-Inf, Inf]",[1],"[-Inf, Inf]",1-exp(w*x)
+normalpdf_,normalpdf_,1,1,2,"[-Inf, Inf; -Inf, Inf]","[1, 0]","[-Inf, Inf]",[1],"[-Inf, Inf]",frac{1}{(w*sqrt(2*\pi))}*exp(-1*((x-w).^2)/(2*w^2))
+tanh_,tanh_,1,1,0,[],[],"[-Inf, Inf]",[1],"[-Inf, Inf]",tanh(x)
+tansig_,tansig_,1,1,0,[],[],"[-Inf, Inf]",[1],"[-Inf, Inf]",tansig(x)
+normal_,normal_,1,1,3,"[-Inf, Inf; -Inf, Inf; -Inf, Inf]","[1, 0, 1]","[-Inf, Inf]",[1],"[-Inf, Inf]",w*exp(((x-w)^2)*w)
+const313_,const313_,1,1,0,[],[],"[-Inf, Inf]",[1],"[-Inf, Inf]",3.1303*ones(size(x))
+ln_,ln_,1,1,0,[],[],"[-Inf, Inf]",[1],"[-Inf, Inf]",ln(x)

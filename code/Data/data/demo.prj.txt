@@ -1,0 +1,48 @@
+% INPUT FILES
+ProjectTitle = 'Demo for the egg carridge modelling, the toy function';
+DataFile     = 'demo.dat.txt'; 
+ModelsFile   = 'demo.mdl.txt';
+RegistryFile = 'demo.reg.xlsx'; 
+%------------------------------------------------------------------------------------------
+                                    % Options 
+DATASEPARATOR    = ',';             % the column separator in the DataFile
+THRESHOLDQUALITY = 0.005;     	% stop when the model with error (MSE) less then THRESHOLDQUALITY is found
+MAXCYCLECOUNT    = 700;%5;           % stop when MAXCYCLECOUNT is resched
+CROSSINGAMOUNT   = 10;%10;%1;     	% number of crossovers (each crossover adds two models inthe population)
+MUTATIONAMOUNT   = 10;%10;%1;     	% number of mutations (each mutation adds one model in the population)
+BESTELEMAMOUNT   = 20;%4;           % number of the selected models pass in the next population 
+MAXNUMOFPARAMS   = 6;               % maximal number of the model parameters, to restrict the model complexity
+MAXNUMOFPRIMS    = 10;              % maximal number of primitives in the model, to restrict the model complexity
+%------------------------------------------------------------------------------------------
+% CONTINUED GENERATION
+CONTINUED         = 'off';          % continued computations, string, 'on' or 'off'
+ModelBaseFile     = 'options.mdb.mat'; % database of the already-generated models
+PopulationFile    = 'options.pop.mat'; % cuppernt population to keep 
+%------------------------------------------------------------------------------------------
+% MODEL OPTIMIZATION 
+                                    % options for the nlinfit
+nlinopts          = statset('nlinfit'); %
+nlinopts.MaxIter  = 30;             % Maximum number of iterations allowed. The default is 100. 
+nlinopts.TolFun   = 1e-4;           % Termination tolerance on the residual sum of squares. The defaults is 1e-8. 
+                                    % NOTE that the model in options.mdl.txt gives 0.0025.
+
+nlinopts.TolX     = 1e-6;           % Termination tolerance on the estimated coefficients beta. The default is 1e-8. 
+nlinopts.Display  = 'off';          % Level of display output during estimation. The choices are 'off' (the default), 'iter' 'final' 
+%nlinopts.DerivStep = eps^(1/3);    % Relative difference used in finite difference gradient calculation. May be a scalar, or the same size as the parameter vector beta0. The default is eps^(1/3). 
+%nlinopts.FunValCheck = 'on';       % Check for invalid values, such as NaN or Inf, from the objective function. Values are 'off' or 'on' (the default) .
+%------------------------------------------------------------------------------------------
+% MODEL PLOT FOR ONE AND TWO INDEPENDENT VARIABLES
+pltopts.display = 'on';             % string, 'on' or 'off'
+%pltopts.legend = {'model','data'}; % string cell, i.e. {'Model', 'Data'}
+pltopts.xlabel = 'K';               % string, i.e. 'x'
+pltopts.ylabel = 't';               % string, i.e. '\alpha'
+pltopts.zlabel = '\sigma^{imp}';    % string, i.e. '\sigma^{imp}'
+%pltopts.title  = 'Plot title';     % string, i.e. 'Plot title'
+%pltopts.data   = 'plot3';          % string, 'trimesh' or 'plot3' (default)
+pltopts.ratio  = [1 1 1];           % [x y z], plot aspect ratio
+pltopts.axis   = [18 28 0 .3 .5 5]; % [xmin xmax ymin ymax zmin zmax]
+pltopts.view   =  [130,14];          % [Az, El], plot rotation
+%pltopts.ftype  = {'psc2', 'emf'};   % string cell, save figures in the mentioned formats, i.e. {'psc2', 'emf'}
+pltopts.fignum = 1;                 % integer, the fist number of the auto-increasing file name for the picture
+                                    % useful formats 'psc2' stands for color 'eps', 'png', 'emf', 'eps' EPS Level 1
+                                    % see also doc saveas

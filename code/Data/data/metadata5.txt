@@ -1,0 +1,4 @@
+AverageDocumentLength 338.8209586439309
+NumberOfDocuments 524929
+NumberOfTokens 177856947
+NumberOfUniqueTerms 742842
