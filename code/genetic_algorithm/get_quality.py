@@ -48,7 +48,7 @@ def get_quality(model, doc_ranks, queries, query_characteristics):
     
     #print(np.sum(np.round(vec_quality, 4)))
 
-    quality = np.sum(vec_quality)
+    quality = np.sum(vec_quality) / float(queries.shape[0])
 
     # TODO add regularization 
     return quality

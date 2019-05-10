@@ -37,14 +37,21 @@ class Primitive:
         return self
 
     def get_correct_value(self, value):
-        if value == float('inf'):
-            return self.inf
-        if value == float('-inf'):
-            return -self.inf
-        if np.abs(value) > self.inf:
-            return self.inf * np.sign(value)
-        
-        return value if value == value else 0
+        value[value == float('inf')] = self.inf
+        value[value == float('-inf')] = -self.inf
+        value[value > self.inf] = self.inf
+        value[value < -self.inf] = -self.inf
+            
+        return value
+        '''
+            if value == float('inf'):
+                return self.inf
+            if value == float('-inf'):
+                return -self.inf
+            if np.abs(value) > self.inf:
+                return self.inf * np.sign(value)
+
+            return value if value == value else 0'''
 
     def calc(self, x, y):
         if self.valency == 0:

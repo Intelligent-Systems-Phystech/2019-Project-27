@@ -44,10 +44,24 @@ def loadCode(ranks, qId, qIndex, trecks):
     q_ranks = ranks[ranks['QueryId'] == qId]
     docs_to_retrive = q_ranks['document'].values 
     
+    # begin of my debug code
+    #print("doc_values")
+    #print(doc_id_string['Name'].values)
+    #print("docs_to_retrive")
+    #print(docs_to_retrive)
+    # end of my debug code
+    
     inds_to_retrive, _ = isMember(doc_id_string['Name'].values, docs_to_retrive)
     
     doc_id_retrive = doc_id_string[inds_to_retrive]
     ids_to_retrive = doc_id_retrive['Id'].values
+    
+    # begin of my debug code
+    #print("doc_values")
+    #print(doc_id_retrive)
+    #print("docs_to_retrive")
+    #print(ids_to_retrive)
+    # end of my debug code
     
     start = 0
     vecDelimCopy = np.ones(lengthForTerms.shape)
@@ -78,48 +92,75 @@ def rewriteRanks(vecNamesDocRanks, matDocIdStr):
     vecIdsIdStr = matDocIdStr.iloc[:, 1].values
     
     _, indInNamesIdStr = isMember(vecNamesDocRanks, vecNamesIdStr)
-
-    idsOfDocRanks = vecIdsIdStr[indInNamesIdStr]
-
+    
+    if len(indInNamesIdStr):
+        idsOfDocRanks = vecIdsIdStr[indInNamesIdStr]
+    else:
+        idsOfDocRanks = []
+        
     return np.sort(idsOfDocRanks)
 
-def loadData(trecks):
+def loadData(trecks, doc_cluster_names = None):
     ranks = loadRanks(trecks)
+    #print("ranks\n\n", ranks)
+    
+    in_cluster_indices = np.arange(ranks.shape[0])
+    if not (doc_cluster_names is None):
+        is_doc_from_cluster = lambda doc_name: doc_name in doc_cluster_names
+        in_cluster_indices = np.vectorize(is_doc_from_cluster)(ranks['document'])
+        ranks = ranks[in_cluster_indices]
+        
+    #print("relevant ranks\n\n", ranks)
+
     
     queries = pd.read_csv(CUR_DIR + 'Data/data/queries' + str(trecks) + '.txt', 
                           delimiter='#',
                           names=['Id', 'Query'])
 
     modelCharacteristics = [None for i in range(queries.values.shape[0])]
-    mat_doc_ranks = [[None, None, None, None, None] for i in range(queries.values.shape[0])]
-
+    mat_doc_ranks = []
+    is_query_nonempty = np.zeros(len(queries))
+    
     for i, query_id in enumerate(queries['Id'].values):
 
         print("Query : ", query_id)
 
         matMetaData, matDocIdStr, matDocRanks, matTermDocVars, vecDelim = loadCode(ranks, query_id, i + 1, trecks)
         
+        
         AvDocLen = matMetaData['AverageDocumentLength']
         NumbDocs = matMetaData['NumberOfDocuments']
 
         ulabel, uindex = np.unique(matTermDocVars[matTermDocVars.columns[0]], return_inverse=True)
-        modelCharacteristics[i] = [ulabel, uindex]
+        modelCharacteristics[i] = [ulabel, uindex]        
         
         xvars = matTermDocVars.iloc[:,1].values * np.log10((AvDocLen + matTermDocVars.iloc[:, 2].values) / matTermDocVars.iloc[:, 2].values)
+        
+  
         yvars = vecDelim / NumbDocs
         
         yvarsExt_ed = np.repeat(yvars, vecDelim.astype(np.int32))
         modelCharacteristics[i].append([xvars, yvarsExt_ed])
         
+        cur_doc_ranks = [[], [], [], [], []]
+        
         for j in range(4):
-            mat_doc_ranks[i][j] = matDocRanks.iloc[:, j]
+            cur_doc_ranks[j] = matDocRanks.iloc[:, j]
         
         vecDocNamesEv  = matDocRanks.iloc[:, 2].values
         vecDocRanksEv  = matDocRanks.iloc[:, 3].values
-        mat_doc_ranks[i][2]  = vecDocNamesEv[vecDocRanksEv == 1]
-        mat_doc_ranks[i][4] = rewriteRanks(mat_doc_ranks[i][2], matDocIdStr)
+        cur_doc_ranks[2]  = vecDocNamesEv[vecDocRanksEv == 1]
+        
+        if len(cur_doc_ranks[2]):
+            cur_doc_ranks[4] = rewriteRanks(cur_doc_ranks[2], matDocIdStr)
+            mat_doc_ranks.append(cur_doc_ranks)
+            is_query_nonempty[i] = 1
+            
     stop = True
-    return (mat_doc_ranks, queries, modelCharacteristics, )
+    is_query_nonempty = is_query_nonempty.astype(bool)
+    return (mat_doc_ranks, 
+            queries.loc[is_query_nonempty,], 
+            np.array(modelCharacteristics)[is_query_nonempty], )
 
 #doc_ranks, queries, query_characteristics = loadData(6)
 
